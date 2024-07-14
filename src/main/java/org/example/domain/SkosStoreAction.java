@@ -1,12 +1,9 @@
 package org.example.domain;
 
-import lombok.ToString;
+import org.immutables.value.Value;
 
-@ToString
-public final class SkosStoreAction extends DatasetStoreAction {
+@Value.Immutable
+public non-sealed interface SkosStoreAction extends StoreAction {
 
 
-    public SkosStoreAction(String id) {
-        super(id);
-    }
 }

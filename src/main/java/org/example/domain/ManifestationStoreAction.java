@@ -1,12 +1,9 @@
 package org.example.domain;
 
-import lombok.ToString;
+import org.immutables.value.Value;
 
-@ToString
-public final class ManifestationStoreAction extends StoreAction {
+@Value.Immutable
+public non-sealed interface ManifestationStoreAction extends StoreAction {
 
 
-    public ManifestationStoreAction(String id) {
-        super(id);
-    }
 }

@@ -1,13 +1,9 @@
 package org.example.domain;
 
+import org.immutables.value.Value;
 
-import lombok.ToString;
-
-@ToString
-public final class ChmStoreAction extends StoreAction {
+@Value.Immutable
+public non-sealed interface ChmStoreAction extends StoreAction {
 
 
-    public ChmStoreAction(String id) {
-        super(id);
-    }
 }

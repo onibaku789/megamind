@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.File;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,14 +35,14 @@ class ClientProcessorTest {
     @BeforeEach
     void setUp() {
         actions = List.of(
-                new SimpleDeleteAction("DELETE 1"),
-                new ExpressionMetadaStoreAction("STORE EXPRESSION 1"),
-                new SimpleDeleteAction("DELETE EXPRESSION 2"),
-                new ChoStoreAction("STORE CHO 1"),
-                new SimpleDeleteAction("DELETE WORK 1")
+                ImmutableSimpleDeleteAction.builder().id("DELETE 1").aspect("expression").owlVersionInfo("owl").type("expression").build(),
+                ImmutableExpressionMetadaStoreAction.builder().id("STORE EXPRESSION 1").aspect("expression").mimeType("ttl").owlVersionInfo("owl").file("new File()").build(),
+                ImmutableSimpleDeleteAction.builder().id("DELETE EXPRESSION 2").aspect("expression").owlVersionInfo("owl").type("expression").build(),
+                ImmutableChoStoreAction.builder().id("STORE CHO 1").aspect("CHO").owlVersionInfo("owl").file("asd").mimeType("xml").build(),
+                ImmutableSimpleDeleteAction.builder().id("DELETE WORK 1").aspect("expression").owlVersionInfo("owl").type("expression").build()
         );
 
-        basicContext = new BasicContext("Some additional info");
+        basicContext = ImmutableBasicContext.of("Some additional info");
     }
 
     @Test

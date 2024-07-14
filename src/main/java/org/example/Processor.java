@@ -37,7 +37,10 @@ public class Processor {
     }
 
     public List<Action> processAll(List<Action> actions, BasicContext basicContext) {
-        MergedContext mergedContext = new MergedContext(basicContext, actionProcessor.preprocessAll(actions));
+        MergedContext mergedContext = MergedContext.builder()
+                .basicContext(basicContext)
+                .extraContext(actionProcessor.preprocessAll(actions))
+                .build();
 
         return actions.stream()
                 .map(action -> tryToProcess(action, mergedContext))

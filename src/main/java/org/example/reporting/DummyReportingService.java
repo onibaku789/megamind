@@ -9,11 +9,11 @@ import java.util.List;
 public class DummyReportingService implements ReportingService {
     @Override
     public void reportSuccessful(List<Action> actions) {
-        actions.forEach(action -> log.info("Action was successfully transformed: {}", action.getId()));
+        actions.forEach(action -> log.info("Action was successfully transformed: {}", action.id()));
     }
 
     @Override
     public void reportFailure(Action action, Exception exception) {
-        log.warn("Action wasn't transformed: {}", action.getId(), exception);
+        log.warn("Action wasn't transformed: {}", action.id(), exception);
     }
 }

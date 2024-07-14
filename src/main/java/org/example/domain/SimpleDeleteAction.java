@@ -1,11 +1,9 @@
 package org.example.domain;
 
-import lombok.ToString;
+import org.immutables.value.Value;
 
-@ToString(callSuper = true)
-public final class SimpleDeleteAction extends DeleteAction {
+@Value.Immutable
+public non-sealed interface SimpleDeleteAction extends DeleteAction {
 
-    public SimpleDeleteAction(String id) {
-        super(id);
-    }
+
 }

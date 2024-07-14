@@ -1,10 +1,8 @@
 package org.example.domain;
 
-import lombok.ToString;
+import org.immutables.value.Value;
 
-@ToString
-public final class WorkMetadaStoreAction extends MetadaStoreAction {
-    public WorkMetadaStoreAction(String id) {
-        super(id);
-    }
+@Value.Immutable
+public non-sealed interface WorkMetadaStoreAction extends MetadaStoreAction {
+
 }

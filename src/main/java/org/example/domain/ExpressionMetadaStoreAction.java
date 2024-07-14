@@ -1,13 +1,12 @@
 package org.example.domain;
 
-import lombok.ToString;
+import org.immutables.value.Value;
 
 import java.util.List;
-@ToString
-public final class ExpressionMetadaStoreAction extends MetadaStoreAction {
-    List<ManifestationStoreAction> manifests;
 
-    public ExpressionMetadaStoreAction(String id) {
-        super(id);
-    }
+@Value.Immutable
+public non-sealed interface ExpressionMetadaStoreAction extends MetadaStoreAction {
+    List<ManifestationStoreAction> manifests();
+
+
 }
