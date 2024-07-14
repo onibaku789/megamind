@@ -1,10 +1,11 @@
 package org.example.client;
 
-import org.example.ExtraContext;
+import org.example.context.ExtraContext;
+import org.immutables.value.Value;
 
 import java.util.List;
 
-
-public record DerivedEntitiesContext(List<String> derivedEntities) implements ExtraContext {
-
+@Value.Immutable
+public interface DerivedEntitiesContext extends ExtraContext {
+    List<String> derivedEntities();
 }

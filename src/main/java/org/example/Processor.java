@@ -1,19 +1,25 @@
 package org.example;
 
 
-import lombok.extern.slf4j.Slf4j;
+import org.example.context.MergedContext;
 import org.example.domain.Action;
 import org.example.reporting.ReportingService;
 import org.example.map.DtoToPciTransformer;
 import org.example.map.PciToDtoTransformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Slf4j
 public class Processor {
+
+    public static final String INPUT_ZIP_NAME = "input.zip.name";
+    private static final Logger log = LoggerFactory.getLogger(Processor.class);
     //Todo explode me
     private final ActionProcessor actionProcessor;
     private final ReportingService reportingService;
@@ -31,21 +37,27 @@ public class Processor {
     }
 
     public Manifest processZip(Manifest zip, BasicContext basicContext) {
+        MDC.put(INPUT_ZIP_NAME, UUID.randomUUID().toString());
         List<Action> transform = dtoTransformer.transform(zip);
         List<Action> actions = processAll(transform, basicContext);
-        return dtoToPciTransformer.transform(actions);
+        Manifest transform1 = dtoToPciTransformer.transform(actions);
+        MDC.remove(INPUT_ZIP_NAME);
+        return transform1;
     }
 
     public List<Action> processAll(List<Action> actions, BasicContext basicContext) {
+        MDC.put(INPUT_ZIP_NAME, UUID.randomUUID().toString());
         MergedContext mergedContext = MergedContext.builder()
                 .basicContext(basicContext)
                 .extraContext(actionProcessor.preprocessAll(actions))
                 .build();
 
-        return actions.stream()
+        List<Action> collect = actions.stream()
                 .map(action -> tryToProcess(action, mergedContext))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
+        MDC.remove(INPUT_ZIP_NAME);
+        return collect;
     }
 
     private List<Action> tryToProcess(Action action, MergedContext mergedContext) {

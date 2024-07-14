@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.client.ClientActionProcessor;
+import org.example.context.MergedContext;
 import org.example.domain.*;
 import org.example.reporting.DummyReportingService;
 import org.example.reporting.ReportingService;
@@ -11,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.File;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;

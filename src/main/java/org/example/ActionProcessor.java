@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.context.ExtraContext;
+import org.example.context.MergedContext;
 import org.example.domain.Action;
 
 import java.util.List;

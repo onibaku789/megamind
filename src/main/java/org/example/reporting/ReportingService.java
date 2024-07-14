@@ -7,5 +7,5 @@ import java.util.List;
 public interface ReportingService {
     void reportSuccessful(List<Action> actions);
 
-    void reportFailure(Action action, Exception exception);
+    void reportFailure(Action action, Throwable exception);
 }

@@ -1,10 +1,11 @@
 package org.example.client;
 
-import lombok.extern.slf4j.Slf4j;
 import org.example.ActionProcessor;
-import org.example.ExtraContext;
-import org.example.MergedContext;
+import org.example.context.ExtraContext;
+import org.example.context.MergedContext;
 import org.example.domain.Action;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Collections;
@@ -12,8 +13,9 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-@Slf4j
 public class ClientActionProcessor implements ActionProcessor {
+
+    private static final Logger log = LoggerFactory.getLogger(ClientActionProcessor.class);
     private final Random random = new Random();
 
     @Override
@@ -23,7 +25,7 @@ public class ClientActionProcessor implements ActionProcessor {
         List<String> derivedEntities = actions.stream()
                 .map(Action::id)
                 .collect(Collectors.toList());
-        DerivedEntitiesContext derivedEntitiesContext = new DerivedEntitiesContext(derivedEntities);
+        DerivedEntitiesContext derivedEntitiesContext = ImmutableDerivedEntitiesContext.builder().derivedEntities(derivedEntities).build();
         log.info("Creating {}", DerivedEntitiesContext.class);
         return Optional.of(derivedEntitiesContext);
     }
@@ -32,6 +34,7 @@ public class ClientActionProcessor implements ActionProcessor {
     public List<Action> process(Action action, MergedContext mergedContext) throws Exception {
         // Client-specific processing logic
         //todo: Use sealed interfaces, classes and delegate on the class type
+        log.info("{}", mergedContext);
         log.info("Client processing action with ID: {}", action.id());
         // Simulate processing logic
         if (random.nextBoolean()) {
