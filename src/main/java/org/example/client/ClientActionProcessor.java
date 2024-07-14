@@ -30,6 +30,7 @@ public class ClientActionProcessor implements ActionProcessor {
     @Override
     public List<Action> process(Action action, MergedContext mergedContext) throws Exception {
         // Client-specific processing logic
+        //todo: Use sealed interfaces, classes and delegate on the class type
         log.info("Client processing action with ID: {}", action.getId());
         // Simulate processing logic
         if (random.nextBoolean()) {
