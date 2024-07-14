@@ -3,7 +3,7 @@ package org.example.domain;
 import lombok.ToString;
 
 @ToString
-public class ChoStoreAction extends StoreAction {
+public final class ChoStoreAction extends StoreAction {
 
 
     public ChoStoreAction(String id) {

@@ -3,7 +3,7 @@ package org.example.domain;
 import lombok.ToString;
 
 @ToString
-public abstract class MetadaStoreAction extends Action {
+public abstract sealed class MetadaStoreAction extends StoreAction permits ExpressionMetadaStoreAction, WorkMetadaStoreAction {
 
     public MetadaStoreAction(String id) {
         super(id);

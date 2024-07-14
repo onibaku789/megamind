@@ -4,7 +4,7 @@ import lombok.ToString;
 
 import java.util.List;
 @ToString
-public class ExpressionMetadaStoreAction extends MetadaStoreAction {
+public final class ExpressionMetadaStoreAction extends MetadaStoreAction {
     List<ManifestationStoreAction> manifests;
 
     public ExpressionMetadaStoreAction(String id) {

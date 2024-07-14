@@ -3,7 +3,7 @@ package org.example.domain;
 import lombok.ToString;
 
 @ToString
-public abstract class DeleteAction extends Action {
+public abstract sealed class DeleteAction extends Action permits SimpleDeleteAction {
 
     String type;
 

@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @EqualsAndHashCode
 @RequiredArgsConstructor
-public abstract class Action {
+public sealed abstract class Action permits DeleteAction, StoreAction {
     protected final String id;
     protected String owlVersionInfo;
     protected String aspect;

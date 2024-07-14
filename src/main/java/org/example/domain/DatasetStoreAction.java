@@ -3,7 +3,7 @@ package org.example.domain;
 import lombok.ToString;
 
 @ToString
-public class DatasetStoreAction extends StoreAction {
+public sealed class DatasetStoreAction extends StoreAction permits SkosStoreAction {
 
 
     public DatasetStoreAction(String id) {
