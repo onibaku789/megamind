@@ -1,6 +1,6 @@
 package org.example.map;
 
-import org.example.Manifest;
+import org.example.api.Manifest;
 import org.example.domain.Action;
 
 import java.util.List;

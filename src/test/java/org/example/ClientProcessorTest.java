@@ -36,7 +36,7 @@ class ClientProcessorTest {
     void setUp() {
         actions = List.of(
                 ImmutableSimpleDeleteAction.builder().id("DELETE 1").aspect("expression").owlVersionInfo("owl").type("expression").build(),
-                ImmutableExpressionMetadaStoreAction.builder().id("STORE EXPRESSION 1").aspect("expression").mimeType("ttl").owlVersionInfo("owl").file("new File()").build(),
+                ImmutableExpressionMetadaStoreAction.builder().id("STORE EXPRESSION 1").aspect("expression").mimeType("ttl").owlVersionInfo("owl").file("new File()").informationType("infotype").build(),
                 ImmutableSimpleDeleteAction.builder().id("DELETE EXPRESSION 2").aspect("expression").owlVersionInfo("owl").type("expression").build(),
                 ImmutableChoStoreAction.builder().id("STORE CHO 1").aspect("CHO").owlVersionInfo("owl").file("asd").mimeType("xml").build(),
                 ImmutableSimpleDeleteAction.builder().id("DELETE WORK 1").aspect("expression").owlVersionInfo("owl").type("expression").build()

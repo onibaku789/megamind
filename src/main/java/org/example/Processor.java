@@ -1,8 +1,10 @@
 package org.example;
 
 
+import org.example.api.Manifest;
 import org.example.context.MergedContext;
 import org.example.domain.Action;
+import org.example.domain.DeleteAction;
 import org.example.reporting.ReportingService;
 import org.example.map.DtoToPciTransformer;
 import org.example.map.PciToDtoTransformer;
@@ -61,18 +63,30 @@ public class Processor {
     }
 
     private List<Action> tryToProcess(Action action, MergedContext mergedContext) {
+        MDC.put("rootUri", action.id());
+        MDC.put("actionType", getActionType(action));
         try {
-            log.info("Started processing action: {}", action);
-            log.info("Basic context contains: [{}] ExtraContext contains: [{}]", mergedContext.basicContext(), mergedContext.extraContext());
-            var processedActions = actionProcessor.process(action, mergedContext);
-            log.info("Finished processing action: {}", action);
+            log.info("Started processing action");
+            List<Action> processedActions = actionProcessor.process(action, mergedContext);
+            log.info("Finished processing action");
             reportingService.reportSuccessful(processedActions);
             return processedActions;
         } catch (Exception e) {
+            log.warn("Action dropped", e);
             reportingService.reportFailure(action, e);
-            log.warn("Action dropped: {}", action, e);
+        } finally {
+            MDC.remove("rootUri");
+            MDC.remove("actionType");
         }
         return Collections.emptyList();
+    }
+
+    private String getActionType(Action action) {
+        if (action instanceof DeleteAction) {
+            return "delete";
+        } else {
+            return "store";
+        }
     }
 
 }
