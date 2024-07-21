@@ -3,7 +3,8 @@
     <!-- Console appender to output logs to the console -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} input.zip=[%X{input.zip.name}] action.type=[%X{actionType:-}] root.uri=[%X{rootUri:-}] - %msg%n
+            <!-- <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} input.zip=[%X{input.zip.name}] action.type=[%X{actionType:-}] root.uri=[%X{rootUri:-}] - %msg%n-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n
             </pattern>
         </encoder>
     </appender>
@@ -12,15 +13,5 @@
     <root level="debug">
         <appender-ref ref="CONSOLE"/>
     </root>
-
-    <!-- Logger for specific package with INFO level -->
-    <logger name="com.example" level="info">
-        <appender-ref ref="CONSOLE"/>
-    </logger>
-
-    <!-- Logger for tests with DEBUG level -->
-    <logger name="com.example.tests" level="debug">
-        <appender-ref ref="CONSOLE"/>
-    </logger>
 
 </configuration>
