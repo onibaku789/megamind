@@ -1,30 +1,51 @@
 package com.example.spring;
 
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.List;
+import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 public class MainApplication {
 
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
-        Runnable runnable = () -> new DoSomething().main();
-        Runnable runnable2 = () -> new DoSomething().main();
-        Runnable runnable3 = () -> new DoSomething().main();
-        Runnable runnable4 = () -> new DoSomething().main();
+    public static void main(String[] args) {
         ExecutorService executorService = Executors.newFixedThreadPool(2);
-        Future<?> submit = executorService.submit(runnable);
-        Future<?> submit2 = executorService.submit(runnable2);
-        Future<?> submit3 = executorService.submit(runnable3);
-        Future<?> submit4 = executorService.submit(runnable4);
-        submit.get();
-        submit4.get();
-        submit2.get();
-        submit3.get();
-        executorService.shutdown();
 
+        try {
+            List<Runnable> tasks = getProcessors();
+
+            List<Future<?>> futures = tasks.stream()
+                    .map(executorService::submit)
+                    .collect(Collectors.toList());
+
+            futures.forEach(MainApplication::tryGet);
+        } finally {
+            executorService.shutdown();
+            try {
+                if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
+                    executorService.shutdownNow();
+                }
+            } catch (InterruptedException ie) {
+                executorService.shutdownNow();
+            }
+        }
+    }
+
+    private static List<Runnable> getProcessors() {
+        return List.of(
+                () -> new CsbProcessor().process(),
+                () -> new CsbProcessor().process(),
+                () -> new CsbProcessor().process(),
+                () -> new CsbProcessor().process());
+    }
+
+    private static void tryGet(Future<?> future) {
+        try {
+            future.get(); // Ensure all tasks complete
+        } catch (ExecutionException | InterruptedException e) {
+            // Handle exceptions from task execution
+            e.printStackTrace();
+        }
     }
 
 }
